@@ -24,52 +24,61 @@ class homepageglobal extends StatelessWidget {
         backgroundColor: Colors.white,
       ),
       body: SafeArea(
-        child: ListView.builder(
-          itemCount: FullCountriesName.length,
-          itemBuilder: (BuildContext context, int index) {
-            return Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: InkWell(
-                  onTap: () {
-                    apicalledglobal
-                        .fetchdata3(
-                      countriesname[index].name,
-                    )
-                        .then((value) {
-                      ct.countries.value = value;
-                      Get.back();
-                      Get.to(detailsglobal(
-                        country: countriesname[index].name,
-                        fullcountryname: FullCountriesName[index].name,
-                      ));
-                    });
-                  },
-                  child: PhysicalModel(
-                    color: Colors.cyan.withOpacity(0.9),
-                    shadowColor: Colors.white.withOpacity(0.40),
-                    borderRadius: BorderRadius.all(Radius.circular(80)),
-                    elevation: 30,
-                    child: Container(
-                        decoration: BoxDecoration(
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              ListView.builder(
+                shrinkWrap: true,
+                itemCount: FullCountriesName.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: InkWell(
+                        onTap: () {
+                          apicalledglobal
+                              .fetchdata3(
+                            countriesname[index].name,
+                          )
+                              .then((value) {
+                            ct.countries.value = value;
+                            Get.back();
+                            Get.to(detailsglobal(
+                              country: countriesname[index].name,
+                              fullcountryname: FullCountriesName[index].name,
+                            ));
+                          });
+                        },
+                        child: PhysicalModel(
+                          color: Colors.cyan.withOpacity(0.9),
+                          shadowColor: Colors.white.withOpacity(0.40),
                           borderRadius: BorderRadius.all(Radius.circular(80)),
-                          color: Colors.white,
+                          elevation: 30,
+                          child: Container(
+                              decoration: BoxDecoration(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(80)),
+                                color: Colors.white,
+                              ),
+                              child: Center(
+                                  child: Padding(
+                                padding: const EdgeInsets.all(28.0),
+                                child: Text(
+                                  FullCountriesName[index].name,
+                                  style: TextStyle(
+                                      fontSize: 23,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ))),
                         ),
-                        child: Center(
-                            child: Padding(
-                          padding: const EdgeInsets.all(28.0),
-                          child: Text(
-                            FullCountriesName[index].name,
-                            style: TextStyle(
-                                fontSize: 23, fontWeight: FontWeight.bold),
-                          ),
-                        ))),
-                  ),
-                ),
+                      ),
+                    ),
+                  );
+                },
               ),
-            );
-          },
+            ],
+          ),
         ),
       ),
     );
