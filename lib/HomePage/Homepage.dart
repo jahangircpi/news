@@ -13,80 +13,99 @@ class HomePage extends StatelessWidget {
       onTap: () {
         FocusScope.of(context).requestFocus(FocusNode());
       },
-      child: DefaultTabController(
-        length: 2,
-        child: Scaffold(
-          appBar: AppBar(
-            backgroundColor: Colors.cyan,
-            centerTitle: true,
-            title: Text("COVID-19"),
-            bottom: TabBar(
-              indicator: BoxDecoration(
-                  borderRadius: BorderRadius.circular(100),
-                  color: Colors.blue.withOpacity(0.8)),
-              indicatorSize: TabBarIndicatorSize.tab,
-              unselectedLabelColor: Colors.white,
-              tabs: [
-                Text(
-                  "বাংলাদেশ",
-                  style: TextStyle(fontSize: 30),
-                ),
-                Text(
-                  "World",
-                  style: TextStyle(fontSize: 30),
-                ),
-              ],
+      child: WillPopScope(
+        onWillPop: () async => showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+                    title: Text("Alert!"),
+                    content: Text('Are you sure you want to exit?'),
+                    actions: <Widget>[
+                      RaisedButton(
+                          child: Text('Yes'),
+                          onPressed: () => Navigator.of(context).pop(true)),
+                      SizedBox(
+                        width: 20,
+                      ),
+                      RaisedButton(
+                          child: Text('Cancel'),
+                          onPressed: () => Navigator.of(context).pop(false)),
+                    ])),
+        child: DefaultTabController(
+          length: 2,
+          child: Scaffold(
+            appBar: AppBar(
+              backgroundColor: Colors.cyan,
+              centerTitle: true,
+              title: Text("COVID-19"),
+              bottom: TabBar(
+                indicator: BoxDecoration(
+                    borderRadius: BorderRadius.circular(100),
+                    color: Colors.blue.withOpacity(0.8)),
+                indicatorSize: TabBarIndicatorSize.tab,
+                unselectedLabelColor: Colors.white,
+                tabs: [
+                  Text(
+                    "বাংলাদেশ",
+                    style: TextStyle(fontSize: 30),
+                  ),
+                  Text(
+                    "World",
+                    style: TextStyle(fontSize: 30),
+                  ),
+                ],
+              ),
             ),
-          ),
-          body: Obx(() {
-            try {
-              return TabBarView(physics: BouncingScrollPhysics(), children: [
-                bangladeshsummary(),
-                Container(
-                  child: Column(
-                    children: [
-                      date(),
-                      summary(),
-                      serarch(),
-                      Expanded(
-                        child: Container(
-                            color: Colors.cyan,
-                            child: ListView.builder(
-                              shrinkWrap: true,
-                              physics: BouncingScrollPhysics(),
-                              itemCount: ctx.onlyCountry.length,
-                              itemBuilder: (BuildContext context, int index) {
-                                return Padding(
-                                  padding: const EdgeInsets.all(4.0),
-                                  child: PhysicalModel(
-                                    color: Colors.cyan,
-                                    shadowColor: Colors.cyan,
-                                    elevation: 10,
-                                    child: Container(
-                                      child: InkWell(
-                                        onTap: () {
-                                          Get.to(detailspage(
-                                              details: ctx.onlyCountry[index]));
-                                        },
-                                        child: Container(
-                                          child: Align(
-                                            alignment: Alignment.center,
-                                            child: Padding(
-                                              padding:
-                                                  const EdgeInsets.all(8.0),
-                                              child: PhysicalModel(
-                                                color: Colors.transparent,
-                                                shadowColor: Colors.white
-                                                    .withOpacity(0.5),
-                                                elevation: 1,
-                                                child: Text(
-                                                  ctx.onlyCountry[index]
-                                                      .country,
-                                                  style: TextStyle(
-                                                      fontSize: 20,
-                                                      color: Colors.white,
-                                                      fontWeight:
-                                                          FontWeight.bold),
+            body: Obx(() {
+              try {
+                return TabBarView(physics: BouncingScrollPhysics(), children: [
+                  bangladeshsummary(),
+                  Container(
+                    child: Column(
+                      children: [
+                        date(),
+                        summary(),
+                        serarch(),
+                        Expanded(
+                          child: Container(
+                              color: Colors.cyan,
+                              child: ListView.builder(
+                                shrinkWrap: true,
+                                physics: BouncingScrollPhysics(),
+                                itemCount: ctx.onlyCountry.length,
+                                itemBuilder: (BuildContext context, int index) {
+                                  return Padding(
+                                    padding: const EdgeInsets.all(4.0),
+                                    child: PhysicalModel(
+                                      color: Colors.cyan,
+                                      shadowColor: Colors.cyan,
+                                      elevation: 10,
+                                      child: Container(
+                                        child: InkWell(
+                                          onTap: () {
+                                            Get.to(detailspage(
+                                                details:
+                                                    ctx.onlyCountry[index]));
+                                          },
+                                          child: Container(
+                                            child: Align(
+                                              alignment: Alignment.center,
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
+                                                child: PhysicalModel(
+                                                  color: Colors.transparent,
+                                                  shadowColor: Colors.white
+                                                      .withOpacity(0.5),
+                                                  elevation: 1,
+                                                  child: Text(
+                                                    ctx.onlyCountry[index]
+                                                        .country,
+                                                    style: TextStyle(
+                                                        fontSize: 20,
+                                                        color: Colors.white,
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                  ),
                                                 ),
                                               ),
                                             ),
@@ -94,19 +113,19 @@ class HomePage extends StatelessWidget {
                                         ),
                                       ),
                                     ),
-                                  ),
-                                );
-                              },
-                            )),
-                      ),
-                    ],
-                  ),
-                )
-              ]);
-            } catch (e) {
-              return Center(child: CircularProgressIndicator());
-            }
-          }),
+                                  );
+                                },
+                              )),
+                        ),
+                      ],
+                    ),
+                  )
+                ]);
+              } catch (e) {
+                return Center(child: CircularProgressIndicator());
+              }
+            }),
+          ),
         ),
       ),
     );
