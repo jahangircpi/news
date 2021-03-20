@@ -27,6 +27,7 @@ List<globalfull> FullCountriesName = [
   globalfull("Indonesia"),
   globalfull("Ireland"),
   globalfull("Israel"),
+  globalfull("India"),
   globalfull("Italy"),
   globalfull("Japan"),
   globalfull("South Korea"),

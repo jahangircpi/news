@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:news/Controller/getxcontroller.dart';
+import 'package:news/HomePage/GlobalCountriesfullName.dart';
 
 import 'package:news/Service/headlineservice.dart';
 import 'package:get/get.dart';
-import 'GlobalCountriesfullName.dart';
 import 'detailsglobal.dart';
 import 'globalcoutries.dart';
 
@@ -12,19 +12,23 @@ class homepageglobal extends StatelessWidget {
   var apicalledglobal = NewsApi();
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.cyan.withOpacity(0.9),
-      appBar: AppBar(
-        centerTitle: true,
-        title: Text(
-          "NewS",
-          style: TextStyle(color: Colors.black),
+    return GestureDetector(
+      onTap: () {
+        FocusScope.of(context).requestFocus(FocusNode());
+      },
+      child: Scaffold(
+        backgroundColor: Colors.cyan.withOpacity(0.9),
+        appBar: AppBar(
+          centerTitle: true,
+          title: Text(
+            "News",
+            style: TextStyle(color: Colors.black),
+          ),
+          elevation: 0,
+          backgroundColor: Colors.white.withOpacity(0.60),
         ),
-        elevation: 0,
-        backgroundColor: Colors.white,
-      ),
-      body: SafeArea(
-        child: ListView.builder(
+        body: SafeArea(
+            child: ListView.builder(
           shrinkWrap: true,
           itemCount: FullCountriesName.length,
           itemBuilder: (BuildContext context, int index) {
@@ -46,6 +50,7 @@ class homepageglobal extends StatelessWidget {
                         fullcountryname: FullCountriesName[index].name,
                       ));
                     });
+                    print(index);
                   },
                   child: PhysicalModel(
                     color: Colors.cyan.withOpacity(0.9),
@@ -71,7 +76,7 @@ class homepageglobal extends StatelessWidget {
               ),
             );
           },
-        ),
+        )),
       ),
     );
   }
